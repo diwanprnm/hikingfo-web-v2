@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { routes } from './routes'
+import { setupAuthGuard } from './guards'
 
 /**
  * App router. Route meta drives the layout zone (public vs authenticated vs admin)
@@ -14,5 +15,7 @@ const router = createRouter({
     return { top: 0 }
   },
 })
+
+setupAuthGuard(router)
 
 export default router

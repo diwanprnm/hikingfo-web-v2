@@ -1,35 +1,85 @@
 @import 'tailwindcss';
 
 /*
- * Design tokens (Tailwind v4 CSS-first). Neutral, bootstrapping baseline.
- * @theme emits these as :root custom properties; utilities reference them via var().
- * The hallmark design pass (task T098) re-locks genre/theme/tokens — it edits the
- * values here; later theme blocks (e.g. [data-theme=dark]) override the same names.
+ * hikingfo design tokens — Hum theme (hallmark pass, T098).
+ * genre: playful · theme: Hum · macrostructure: Catalogue spine
+ * Signed values live in src/shared/design/tokens.css; this @theme block is the
+ * operative copy Tailwind utilities read (bg-brand-*, text-ink-*, rounded-card…).
+ * Later theme blocks (e.g. [data-theme=dark]) override the same names.
  */
 @theme {
-  --color-brand-50: #eef7f2;
-  --color-brand-100: #d7ecdf;
-  --color-brand-200: #aed8c0;
-  --color-brand-300: #7fbf9d;
-  --color-brand-400: #4ea177;
-  --color-brand-500: #2f855a;
-  --color-brand-600: #1a6b4a;
-  --color-brand-700: #17563d;
-  --color-brand-800: #134531;
-  --color-brand-900: #0f3928;
+  /* ink — cool-tilted near-black family, tuned by opacity not new hexes */
+  --color-ink-900: oklch(22% 0.012 250);
+  --color-ink-700: oklch(34% 0.012 250);
+  --color-ink-600: oklch(42% 0.012 250);
+  --color-ink-500: oklch(52% 0.01 250);
+  --color-ink-400: oklch(62% 0.01 250);
+  --color-ink-300: oklch(72% 0.008 250);
+  --color-ink-100: oklch(90% 0.008 250);
 
-  --color-sun-300: #ffd166;
-  --color-sun-400: #f4b942;
-  --color-sun-500: #e6a817;
+  /* paper — near-white with cool tilt (user brief: white & blue; never pure #fff) */
+  --color-paper: oklch(98% 0.004 235);
+  --color-paper-2: oklch(95.5% 0.008 235);
+  --color-paper-raised: oklch(99.5% 0.003 235);
 
-  --color-ink-900: #1b2a23;
-  --color-ink-600: #45564d;
-  --color-ink-400: #6b7d73;
-  --color-paper: #faf7f2;
-  --color-paper-raised: #ffffff;
+  /* brand (mountain blue) — owns primary actions; hue 245 keeps clear of ink */
+  --color-brand-50: oklch(96% 0.015 245);
+  --color-brand-100: oklch(92.5% 0.032 245);
+  --color-brand-200: oklch(89% 0.055 245);
+  --color-brand-300: oklch(83% 0.09 245);
+  --color-brand-400: oklch(74% 0.125 245);
+  --color-brand-500: oklch(65% 0.16 245);
+  --color-brand-600: oklch(56% 0.18 245);
+  --color-brand-700: oklch(47% 0.17 245);
+  --color-brand-800: oklch(38% 0.14 245);
+  --color-brand-900: oklch(30% 0.1 245);
+
+  /* sky-cyan — links, hover tints, community surfaces (hue 235) */
+  --color-sky-cyan: oklch(66% 0.18 235);
+
+  /* coral — the single high-energy pop (badge earned, verified stamp) */
+  --color-coral: oklch(68% 0.24 18);
+
+  /* mint — success / verified states */
+  --color-mint: oklch(80% 0.16 150);
+
+  /* focus ring */
+  --color-focus: oklch(56% 0.18 245);
+
+  --radius-card: 20px;
+  --radius-input: 12px;
 
   --font-display: 'Plus Jakarta Sans', 'Segoe UI', system-ui, sans-serif;
-  --font-body: 'Inter', 'Segoe UI', system-ui, sans-serif;
+  --font-body: 'Plus Jakarta Sans', 'Segoe UI', system-ui, sans-serif;
+  --font-label: 'JetBrains Mono', 'Consolas', monospace;
+}
+
+/*
+ * 007 — shadcn-vue token bridge. Semantic variables ALIAS the Hum tokens
+ * above; the stock library palette never renders (research R2). `inline`
+ * so utilities resolve against the live var() at runtime.
+ */
+@theme inline {
+  --color-background: var(--color-paper);
+  --color-foreground: var(--color-ink-900);
+  --color-card: var(--color-paper-raised);
+  --color-card-foreground: var(--color-ink-900);
+  --color-primary: var(--color-brand-600);
+  --color-primary-foreground: var(--color-paper-raised);
+  --color-muted: var(--color-paper-2);
+  --color-muted-foreground: var(--color-ink-500);
+  --color-accent: var(--color-brand-100);
+  --color-accent-foreground: var(--color-ink-900);
+  --color-destructive: var(--color-red-600);
+  --color-destructive-foreground: var(--color-paper-raised);
+  --color-border: oklch(22% 0.012 250 / 0.15);
+  --color-input: oklch(22% 0.012 250 / 0.15);
+  --color-ring: var(--color-focus);
+  --color-popover: var(--color-paper-raised);
+  --color-popover-foreground: var(--color-ink-900);
+  --radius-lg: var(--radius-input);
+  --radius-md: calc(var(--radius-input) - 4px);
+  --radius-sm: calc(var(--radius-input) - 8px);
 }
 
 html,
@@ -38,9 +88,117 @@ body,
   height: 100%;
 }
 
+/* hallmark gate 34 — global clip, never `hidden` (preserves sticky) */
+html {
+  overflow-x: clip;
+}
+body {
+  overflow-x: clip;
+}
+
 body {
   background-color: var(--color-paper);
   color: var(--color-ink-900);
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
+}
+
+/* hallmark discipline — visible focus ring, instant (never animated) */
+:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+/* mono labels — ordinals, stats, tags (JetBrains, uppercase) */
+.mono-label {
+  font-family: var(--font-label);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.75;
+}
+
+/* emphasis = colour band that tracks wrapped text (never ::after bar, never italic) */
+.hl {
+  background-image: linear-gradient(var(--color-brand-200) 0 0);
+  background-repeat: no-repeat;
+  background-size: 100% 0.32em;
+  background-position: 0 82%;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+/* clickable affordances never wrap (gate 49) — parent reflows, label stays one line */
+.btn-affordance,
+nav a,
+footer a {
+  white-space: nowrap;
+}
+
+/* cards — Hum physics: soft ambient shadow, 20px radius, spring lift on hover */
+.card {
+  border-radius: var(--radius-card);
+  background: var(--color-paper-raised);
+  box-shadow: 0 12px 32px -16px oklch(22% 0.012 250 / 0.12);
+  transition:
+    transform 220ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 220ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px -16px oklch(22% 0.012 250 / 0.18);
+}
+
+/* the push button — pear colour edge + soft cast; press-down is the feedback */
+.btn-push {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  padding: 0.65rem 1.3rem;
+  font-weight: 600;
+  border: 0;
+  border-radius: 999px;
+  color: oklch(99% 0.003 235);
+  background: var(--color-brand-600);
+  cursor: pointer;
+  box-shadow:
+    0 4px 0 0 var(--color-brand-800),
+    0 6px 12px -3px oklch(56% 0.18 245 / 0.45);
+  transition:
+    transform 140ms cubic-bezier(0.2, 0.7, 0.3, 1),
+    box-shadow 140ms cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+.btn-push:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 6px 0 0 var(--color-brand-800),
+    0 12px 22px -4px oklch(56% 0.18 245 / 0.45);
+}
+.btn-push:active {
+  transform: translateY(3px);
+  box-shadow:
+    0 1px 0 0 var(--color-brand-800),
+    0 2px 6px -2px oklch(56% 0.18 245 / 0.45);
+  transition-duration: 70ms;
+}
+.btn-push:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .card:hover {
+    transform: none;
+    transition: none;
+  }
+  .btn-push,
+  .btn-push:hover,
+  .btn-push:active {
+    transform: none;
+    transition-duration: 0.01ms;
+  }
 }

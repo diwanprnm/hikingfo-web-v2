@@ -13,7 +13,7 @@ const { t } = useI18n()
       <p class="mt-2 text-ink-600">{{ t('notFound.body') }}</p>
       <RouterLink
         to="/"
-        class="mt-6 inline-block rounded bg-brand-600 px-4 py-2 text-sm font-semibold text-white hover:bg-brand-700"
+        class="mt-6 inline-block btn-push text-sm"
       >
         {{ t('common.back') }}
       </RouterLink>

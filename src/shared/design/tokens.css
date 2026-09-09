@@ -1,0 +1,47 @@
+/* Hallmark · genre: playful · macrostructure: Catalogue (browse spine) · theme: Hum (user-retuned white/blue, 2026-09-05)
+ * tone: playful/warm · anchor hue: blue 245 / cyan 235 · accents: blue primary · coral pop · mint success
+ * enrichment: none (typography only) · nav: N1b three-section · footer: Ft5 statement
+ * axes vs prior run: n/a (first Hallmark run for this project)
+ * Hallmark · pre-emit critique: P4 H4 E4 S4 R4 V4
+ *
+ * hikingfo design tokens — locked. Every colour/font in the app references these
+ * names via Tailwind's @theme mapping in src/assets/main.css. No inline raw values.
+ */
+
+:root {
+  /* paper — near-white with cool tilt (user brief: white & blue; never pure #fff) */
+  --hf-paper: oklch(98% 0.004 235);
+  --hf-paper-2: oklch(95.5% 0.008 235);    /* tinted band */
+  --hf-paper-3: oklch(93% 0.012 235);      /* deeper hover */
+  --hf-paper-raised: oklch(99.5% 0.003 235); /* card surface — not #fff */
+
+  /* ink — near-black with cool tilt (never pure black); tone via opacity, not new hexes */
+  --hf-ink: oklch(22% 0.012 250);
+
+  /* accents — blue primary (user brief), coral pop, mint success */
+  --hf-accent: oklch(56% 0.18 245);       /* mountain blue — primary action, the push button */
+  --hf-accent-deep: oklch(38% 0.14 245);  /* blue edge/shadow */
+  --hf-accent-2: oklch(66% 0.18 235);     /* sky-cyan — links, hover tints */
+  --hf-accent-3: oklch(68% 0.24 18);      /* coral — the single high-energy pop */
+  --hf-mint: oklch(80% 0.16 150);         /* success / verified states */
+  --hf-lavender: oklch(74% 0.16 305);     /* occasional tag chip */
+  --hf-focus: oklch(56% 0.18 245);
+
+  /* radius — Hum is the rounded theme: no square corners on cards/pills/inputs */
+  --hf-radius-card: 20px;
+  --hf-radius-pill: 999px;
+  --hf-radius-input: 12px;
+
+  /* shadows — layered: tight contact + soft ambient, brightening on hover */
+  --hf-shadow-card: 0 12px 32px -16px oklch(22% 0.012 250 / 0.12);
+  --hf-shadow-card-hover: 0 16px 40px -16px oklch(22% 0.012 250 / 0.18);
+
+  /* easings — no browser `ease`, no overshoot on UI state (spring reserved for cards) */
+  --hf-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --hf-ease-snap: cubic-bezier(0.22, 1, 0.36, 1);
+  --hf-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1); /* cards only */
+
+  /* motion durations */
+  --hf-dur-fast: 140ms;
+  --hf-dur-med: 220ms;
+}
